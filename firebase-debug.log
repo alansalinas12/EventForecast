@@ -1,0 +1,73 @@
+[debug] [2018-04-02T21:03:14.155Z] ----------------------------------------------------------------------
+[debug] [2018-04-02T21:03:14.158Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\alanr\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-04-02T21:03:14.158Z] CLI Version:   3.17.6
+[debug] [2018-04-02T21:03:14.158Z] Platform:      win32
+[debug] [2018-04-02T21:03:14.158Z] Node Version:  v9.8.0
+[debug] [2018-04-02T21:03:14.158Z] Time:          Mon Apr 02 2018 16:03:14 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:03:14.158Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-04-02T21:03:14.168Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-04-02T21:03:14.170Z] > authorizing via signed-in user
+[debug] [2018-04-02T21:03:14.171Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-04-02T21:03:14.171Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/qCXRQCmHrvkNgri7r8ZUEfe7irhEAj_JTPxhxXmB7zU',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Mon Apr 02 2018 16:03:14 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:03:14.375Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-02T21:03:14.383Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/eventforecast  
+  
+ Mon Apr 02 2018 16:03:14 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:03:14.833Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-02T21:03:14.835Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/eventforecast/tokens  
+  
+ Mon Apr 02 2018 16:03:14 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:03:16.116Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-02T21:03:16.118Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/eventforecast  
+  
+ Mon Apr 02 2018 16:03:16 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:03:16.353Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'Z:\Code\Microsoft VS Code\Repositories\EventForecast'...
+[info] 
+[debug] [2018-04-02T21:03:16.358Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/51824759816/clients/_:getWebAppConfig  
+  
+ Mon Apr 02 2018 16:03:16 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:03:16.730Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+
+[debug] [2018-04-02T21:42:26.156Z] ----------------------------------------------------------------------
+[debug] [2018-04-02T21:42:26.158Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\alanr\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-04-02T21:42:26.159Z] CLI Version:   3.17.6
+[debug] [2018-04-02T21:42:26.159Z] Platform:      win32
+[debug] [2018-04-02T21:42:26.159Z] Node Version:  v9.8.0
+[debug] [2018-04-02T21:42:26.159Z] Time:          Mon Apr 02 2018 16:42:26 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:42:26.159Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-04-02T21:42:26.168Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-04-02T21:42:26.169Z] > authorizing via signed-in user
+[debug] [2018-04-02T21:42:26.170Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/eventforecast  
+  
+ Mon Apr 02 2018 16:42:26 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:42:26.738Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-02T21:42:26.740Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/eventforecast/tokens  
+  
+ Mon Apr 02 2018 16:42:26 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:42:27.140Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-02T21:42:27.141Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/eventforecast  
+  
+ Mon Apr 02 2018 16:42:27 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:42:27.393Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'Z:\Code\Microsoft VS Code\Repositories\EventForecast'...
+[info] 
+[debug] [2018-04-02T21:42:27.399Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/51824759816/clients/_:getWebAppConfig  
+  
+ Mon Apr 02 2018 16:42:27 GMT-0500 (Central Daylight Time)
+[debug] [2018-04-02T21:42:27.814Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+

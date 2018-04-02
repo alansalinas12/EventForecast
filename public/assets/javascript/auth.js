@@ -1,6 +1,8 @@
-  var GoogleAuth;
-  var SCOPE = 'https://www.googleapis.com/auth/calendar';
+var GoogleAuth;
 
+var SCOPE = 'https://www.googleapis.com/auth/calendar';
+
+var database = firebase.database();
 
 $(document).ready(function () {
     handleClientLoad();
@@ -69,14 +71,46 @@ $(document).ready(function () {
           $('#revoke-access-button').css('display', 'inline-block');
           $('#auth-status').html('You are currently signed in and have granted ' +
               'access to this app.');
+        var email = user.w3.U3;
+        
+        gapi.client.calendar.events.list({
+              'calendarId': 'primary',
+              'timeMin': (new Date()).toISOString(),
+              'showDeleted': false,
+              'singleEvents': true,
+              'maxResults': 10,
+              'orderBy': 'startTime'
+          }).then(function (response) {
+              var events = response.result.items;
+              var userEvents = [];
+              if (events.length > 0) {
+                  for (i = 0; i < events.length; i++) {
+                      var event = events[i];
+                      var when = event.start.dateTime;
+                      if (!when) {
+                          when = event.start.date;
+                      }
+                      var newEvent = [
+                          location = event.location,
+                          start = event.when
+                      ];
+                      userEvents.push(newEvent);
+                      
+                  }
+              }
+          })
       } else {
           $('#sign-in-or-out-button').html('Sign In/Authorize');
           $('#revoke-access-button').css('display', 'none');
           $('#auth-status').html('You have not authorized this app or you are ' +
               'signed out.');
       }
+      database.ref("Users/").set(email).push(userEvents);
   }
 
   function updateSigninStatus(isSignedIn) {
       setSigninStatus();
   }
+
+
+
