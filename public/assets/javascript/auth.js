@@ -96,7 +96,7 @@ $(document).ready(function () {
                       var newEvent = {
                           title: event.summary,
                           location: event.location,
-                          start: when
+                          start: moment(when).format('X')
                       };
                       userEvents.push(newEvent);                     
                   }
