@@ -95,7 +95,7 @@ $(document).ready(function () {
                       }
                       var newEvent = {
                           title: event.summary,
-                          
+                          location: event.location,
                           start: when
                       };
                       userEvents.push(newEvent);                     
