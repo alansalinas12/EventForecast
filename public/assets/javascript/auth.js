@@ -1,16 +1,23 @@
 var GoogleAuth;
 var SCOPE = 'https://www.googleapis.com/auth/calendar';
-
+var map;
+var geocoder;
 var database = firebase.database();
 
 $(document).ready(function () {
     handleClientLoad();
+
 });
 
   function handleClientLoad() {
       // Load the API's client and auth2 modules.
       // Call the initClient function after the modules load.
       gapi.load('client:auth2', initClient);
+      map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: { lat: 30.267, lng: 97.743 }
+      });
+      geocoder = new google.maps.Geocoder();
   }
 
 
@@ -86,6 +93,8 @@ $(document).ready(function () {
           }).then(function (response) {
               var events = response.result.items;
               var userEvents = [];
+              var lat = 0;
+              var lng = 0;
               if (events.length > 0) {
                   for (i = 0; i < events.length; i++) {
                       var event = events[i];
@@ -93,9 +102,29 @@ $(document).ready(function () {
                       if (!when) {
                           when = event.start.date;
                       }
+
+                      var address = event.location;
+                      geocoder.geocode({ 'address': address }, function (results, status) {
+                          if (status == 'OK') {
+                              map.setCenter(results[0].geometry.location);
+                              var marker = new google.maps.Marker({
+                                  map: map,
+                                  position: results[0].geometry.location
+                              });
+
+                              lat = results[0].geometry.location.lat;
+                              lng = results[0].geometry.location.lng;
+
+                          }
+                      });
+
                       var newEvent = {
                           title: event.summary,
-                          location: event.location,
+                          location: {
+                              address: event.location,
+                              lat: lat,
+                              lng: lng
+                          },
                           start: moment(when).format('X')
                       };
                       userEvents.push(newEvent);                     
@@ -115,6 +144,3 @@ $(document).ready(function () {
   function updateSigninStatus(isSignedIn) {
       setSigninStatus();
   }
-
-
-
