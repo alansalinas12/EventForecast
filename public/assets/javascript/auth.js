@@ -120,11 +120,24 @@ function geolocate() {
 
     var user = GoogleAuth.currentUser.get();
     var userId = user.El;
+    var name = user.w3.ig;
+    var email = user.w3.U3;
+
     var lat;
     var lng;
 
     console.log(user);
 
+    if (userEvents.length > 0) {
+        for (i = 0; i < userEvents.length; i++) {
+            convertGeocode();
+        }
+    }
+    
+
+}
+
+function convertGeocode() {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: {
@@ -133,42 +146,57 @@ function geolocate() {
         }
     });
     var geocoder = new google.maps.Geocoder();
-    console.log(userEvents);
-    if (userEvents.length > 0) {
-        for (i = 0; i < userEvents.length; i++) {
-            var address = userEvents[i].location.address;
-            var title = userEvents[i].title;
-            var start = userEvents[i].start;
+    var event = userEvents[i];
+    var address = userEvents[i].location.address;
+    var title = userEvents[i].title;
+    var start = userEvents[i].start;
 
+    geocoder.geocode({
+        'address': address
+    }, function (results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
 
-            geocoder.geocode({
-                'address': address
-            }, function (results, status) {
-                if (status == 'OK') {
-                    map.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location
-                    });
-                    
-                    lat = results[0].geometry.location.lat();
-                    lng = results[0].geometry.location.lng();
-                        
-                }
-            })
-            var updatedEvent = {
-                title: title,
-                start: start,
-                location: {
+            lat = results[0].geometry.location.lat();
+            lng = results[0].geometry.location.lng();
+
+            
+                var updatedEvent = {
+                    title: title,
+                    start: start,
                     address: address,
                     lat: lat,
                     lng: lng
                 }
-            };
-            updatedEvents.push(updatedEvent);
-
-            console.log(updatedEvent);
-        }
+                updatedEvents.push(updatedEvent);
+            }
+        }); 
     }
+
+$('#populate').on('click', function() {
+
     console.log(updatedEvents);
-}
+    updatedEvents.forEach(function (event) {
+        var latitude = event.lat;
+        var longitude = event.lng;
+        var time = event.start;
+
+        var weatherURL = "https://api.darksky.net/forecast/36f29f4a18b4bbad3f41032535ed8d43/" + latitude + "," + longitude + "," + time;
+
+        $.ajax({
+            url: weatherURL,
+            method: "GET",
+            dataType: "jsonp"
+        }).then(function (response) {
+            console.log(response);
+
+            if (response.data) {
+
+            }
+        });
+    })
+})  
