@@ -177,6 +177,9 @@ function convertGeocode() {
         }); 
     }
 
+
+var readyEvents = [];
+
 $('#populate').on('click', function() {
 
     console.log(updatedEvents);
@@ -184,6 +187,8 @@ $('#populate').on('click', function() {
         var latitude = event.lat;
         var longitude = event.lng;
         var time = event.start;
+        var address = event.address;
+        var title = event.title;
 
         var weatherURL = "https://api.darksky.net/forecast/36f29f4a18b4bbad3f41032535ed8d43/" + latitude + "," + longitude + "," + time;
 
@@ -194,9 +199,22 @@ $('#populate').on('click', function() {
         }).then(function (response) {
             console.log(response);
 
-            if (response.data) {
+            var readyEvent = {
+                title: title,
+                start: time,
+                address: address,
+                weather: {
+                    temp: response.currently.temperature,
+                    summary: response.currently.summary,
+                    icon: response.currently.icon
+                }
 
             }
+            
+            readyEvents.push(readyEvent);
+
+            $('#eventcards').append("<div class='card'><div class='card-header'>" + title + "</div><div class='card-body'><h5 class='card-title'>" + address + "</h5><p class='card-text'>" + readyEvent.weather.temp + "</p></div> </div>");
         });
+        console.log(readyEvents);
     })
 })  
