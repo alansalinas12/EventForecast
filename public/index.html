@@ -14,24 +14,34 @@
 
 <body>
     <section id="navbar">
-        <div class="container container-fluid">
-            
+        <div class="container container-fluid nav">
+            <div class="row">
+                <div id="logo" class="col-4">
+
+                </div>
+                <div id="btns" class="col-8">
+                    <button id="sign-in-or-out-button" style="margin-left: 25px">Sign In/Authorize</button>
+                    <button id="revoke-access-button" style="display: none; margin-left: 25px">Revoke access</button>
+                    <div id="auth-status" style="display: inline; padding-left: 25px"></div>
+                </div>
+            </div>
         </div>
     </section>
-    <section id="googlewidgets">
-
+    <section id="content">
+        <div class="row">
+            <div id="googleWidgets" class="col-6">
+                <div id="mapContainer">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div id="eventCards" class="col-6">
+                <button id="populate">Populate</button>
+            </div>
+        </div>
     </section>
-    <section id="eventcards">
-
-    </section>
-<button id="sign-in-or-out-button" style="margin-left: 25px">Sign In/Authorize</button>
-<button id="revoke-access-button" style="display: none; margin-left: 25px">Revoke access</button>
-<button id="populate">Populate</button>
 
 
-<div id="auth-status" style="display: inline; padding-left: 25px"></div>
-<hr>
-<div id="map"></div>
+
     <!--JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>

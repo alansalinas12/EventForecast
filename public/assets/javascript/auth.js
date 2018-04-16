@@ -187,6 +187,7 @@ $('#populate').on('click', function() {
         var latitude = event.lat;
         var longitude = event.lng;
         var time = event.start;
+        var timeCalendar = moment(event.start, 'X').format('MMMM Do YYYY, h:mm:ss a');
         var address = event.address;
         var title = event.title;
 
@@ -213,7 +214,7 @@ $('#populate').on('click', function() {
             
             readyEvents.push(readyEvent);
 
-            $('#eventcards').append("<div class='card'><div class='card-header'>" + title + "</div><div class='card-body'><h5 class='card-title'>" + address + "</h5><p class='card-text'>" + readyEvent.weather.temp + "</p></div> </div>");
+            $('#eventCards').append("<div class='card eventCard'><div class='card-header'>" + timeCalendar + ": " + title + "</div><div class='card-body'><div class='row'><div class='col eventInfo'><h5 class='card-title'>" + address + "</h5><p class='card-text'>Expected Condition: " + readyEvent.weather.summary + " -- Temperature: " + readyEvent.weather.temp + " °F" + "</p></div><div class='col eventIcon'><img class='weatherIcon' src='assets/images/" + readyEvent.weather.icon + ".png'></div></div></div></div>");
         });
         console.log(readyEvents);
     })
