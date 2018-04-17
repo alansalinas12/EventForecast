@@ -1,12 +1,17 @@
 var GoogleAuth;
 var SCOPE = 'https://www.googleapis.com/auth/calendar';
 var database = firebase.database();
+var map;
+var marker;
+var geocoder;
+var user;
 var userEvents = [];
-
+var updatedEvents = [];
+var readyEvents = [];
 
 $(document).ready(function () {
     handleClientLoad();
-
+    initMap();
 });
 
 function handleClientLoad() {
@@ -15,6 +20,16 @@ function handleClientLoad() {
     gapi.load('client:auth2', initClient);
 }
 
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: {
+            lat: 30.267,
+            lng: -97.743
+        }
+    });
+    geocoder = new google.maps.Geocoder();
+}
 
 function initClient() {
     // Retrieve the discovery document for version 3 of Google Drive API.
@@ -69,7 +84,7 @@ function updateSigninStatus(isSignedIn) {
 }
 
 function setSigninStatus(isSignedIn) {
-    var user = GoogleAuth.currentUser.get();
+    user = GoogleAuth.currentUser.get();
     var isAuthorized = user.hasGrantedScopes(SCOPE);
     if (isAuthorized) {
         $('#sign-in-or-out-button').html('Sign out');
@@ -114,17 +129,8 @@ function setSigninStatus(isSignedIn) {
 
 }
 
-var updatedEvents = [];
 
 function geolocate() {
-
-    var user = GoogleAuth.currentUser.get();
-    var userId = user.El;
-    var name = user.w3.ig;
-    var email = user.w3.U3;
-
-    var lat;
-    var lng;
 
     console.log(user);
 
@@ -133,19 +139,10 @@ function geolocate() {
             convertGeocode();
         }
     }
-    
-
 }
 
 function convertGeocode() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
-        center: {
-            lat: 30.267,
-            lng: 97.743
-        }
-    });
-    var geocoder = new google.maps.Geocoder();
+
     var event = userEvents[i];
     var address = userEvents[i].location.address;
     var title = userEvents[i].title;
@@ -155,15 +152,9 @@ function convertGeocode() {
         'address': address
     }, function (results, status) {
         if (status == 'OK') {
-            map.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-            });
 
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
-
             
                 var updatedEvent = {
                     title: title,
@@ -171,18 +162,16 @@ function convertGeocode() {
                     address: address,
                     lat: lat,
                     lng: lng
-                }
-                updatedEvents.push(updatedEvent);
-            }
-        }); 
-    }
-
-
-var readyEvents = [];
+                };
+            updatedEvents.push(updatedEvent);
+        }
+    }); 
+}
 
 $('#populate').on('click', function() {
 
     console.log(updatedEvents);
+
     updatedEvents.forEach(function (event) {
         var latitude = event.lat;
         var longitude = event.lng;
@@ -216,23 +205,30 @@ $('#populate').on('click', function() {
             
             readyEvents.push(readyEvent);
 
-            $('#eventCards').append("<div class='card eventCard'><div class='card-header'>" + timeCalendar + ": " + title + "</div><div class='card-body'><div class='row'><div class='col eventInfo'><h5 class='card-title'>" + address + "</h5><p class='card-text'>Expected Condition: " + readyEvent.weather.summary + " -- Temperature: " + readyEvent.weather.temp + " °F" + "</p></div><div class='col eventIcon'><img class='weatherIcon' src='assets/images/" + readyEvent.weather.icon + ".png'><button type='button' class='btn btn-info mapMarkerBtn' data-button='{lat:" + eventLat + ", lng:" + eventLng + "}'>Map Marker</button></div></div></div></div>");
+            $('#eventCards').append("<div class='card eventCard'><div class='card-header'>" + timeCalendar + ": " + title + "</div><div class='card-body'><div class='row'><div class='col eventInfo'><h5 class='card-title'>" + address + "</h5><p class='card-text'>Expected Condition: " + readyEvent.weather.summary + " -- Temperature: " + readyEvent.weather.temp + " °F" + "</p></div><div class='col eventIcon'><img class='weatherIcon' src='assets/images/" + readyEvent.weather.icon + ".png'><button type='button' class='btn btn-info mapMarkerBtn' data-lat='" + eventLat + "' data-lng='" + eventLng + "'>Map Marker</button></div></div></div></div>");
             
         });
         console.log(readyEvents);
     }) 
 })
 
-$("button").on("click", function () {
-    var data = $(this).data('button');
-    console.log(data);
+$("#eventCards").on("click", "button.mapMarkerBtn", function () {
+    
+    var lat = $(this).data('lat');
+    var lng = $(this).data('lng');
+
+    console.log(lat);
+    console.log(lng);
+
     var myLatLng = {
-        lat: data.lat,
-        lng: data.lng
+        lat: lat,
+        lng: lng
     };
 
-    var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-    }).setMap('map');
+    console.log(myLatLng);
+
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(myLatLng),
+        map: map
+    })
 })
