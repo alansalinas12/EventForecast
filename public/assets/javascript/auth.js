@@ -190,6 +190,8 @@ $('#populate').on('click', function() {
         var timeCalendar = moment(event.start, 'X').format('MMMM Do YYYY, h:mm:ss a');
         var address = event.address;
         var title = event.title;
+        var eventLat = event.lat;
+        var eventLng = event.lng;
 
         var weatherURL = "https://api.darksky.net/forecast/36f29f4a18b4bbad3f41032535ed8d43/" + latitude + "," + longitude + "," + time;
 
@@ -214,8 +216,23 @@ $('#populate').on('click', function() {
             
             readyEvents.push(readyEvent);
 
-            $('#eventCards').append("<div class='card eventCard'><div class='card-header'>" + timeCalendar + ": " + title + "</div><div class='card-body'><div class='row'><div class='col eventInfo'><h5 class='card-title'>" + address + "</h5><p class='card-text'>Expected Condition: " + readyEvent.weather.summary + " -- Temperature: " + readyEvent.weather.temp + " °F" + "</p></div><div class='col eventIcon'><img class='weatherIcon' src='assets/images/" + readyEvent.weather.icon + ".png'></div></div></div></div>");
+            $('#eventCards').append("<div class='card eventCard'><div class='card-header'>" + timeCalendar + ": " + title + "</div><div class='card-body'><div class='row'><div class='col eventInfo'><h5 class='card-title'>" + address + "</h5><p class='card-text'>Expected Condition: " + readyEvent.weather.summary + " -- Temperature: " + readyEvent.weather.temp + " °F" + "</p></div><div class='col eventIcon'><img class='weatherIcon' src='assets/images/" + readyEvent.weather.icon + ".png'><button type='button' class='btn btn-info mapMarkerBtn' data-button='{lat:" + eventLat + ", lng:" + eventLng + "}'>Map Marker</button></div></div></div></div>");
+            
         });
         console.log(readyEvents);
-    })
-})  
+    }) 
+})
+
+$("button").on("click", function () {
+    var data = $(this).data('button');
+    console.log(data);
+    var myLatLng = {
+        lat: data.lat,
+        lng: data.lng
+    };
+
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+    }).setMap('map');
+})
